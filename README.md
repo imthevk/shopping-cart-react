@@ -1,4 +1,4 @@
-# React - Product Compare
+# React - shopping-cart
 
 
 ## Table of contents
