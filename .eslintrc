@@ -15,6 +15,15 @@
         "extensions": [".js"]
       }
     ],
-    "react/state-in-constructor": [1, "never"]
+    "react/state-in-constructor": [1, "never"],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": ["**/*.stories.js"] }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
