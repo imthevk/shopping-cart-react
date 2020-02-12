@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from 'components/button/Button';
+import MediumLabel from 'components/label/MediumLabel';
 
 const ProductImg = styled.img`
   min-height: 400px;
@@ -22,13 +23,6 @@ const InnerWrapper = styled.div`
   background-color: rgba(255, 255, 255, 1);
 `;
 
-const Title = styled.h3`
-  text-align: center;
-  margin: 0 0 5px;
-  font-size: 1.4rem;
-  font-weight: 700;
-`;
-
 const Price = styled.span`
   display: block;
   text-align: center;
@@ -46,7 +40,7 @@ const Product = () => {
     <ProductWrapper>
       <ProductImg src="https://source.unsplash.com/300x400" alt="product_photo" />
       <InnerWrapper>
-        <Title>Pies Shiba Inu</Title>
+        <MediumLabel>Pies Shiba Inu</MediumLabel>
         <Price>24.99zł</Price>
         <AddToCart>Add to cart</AddToCart>
       </InnerWrapper>

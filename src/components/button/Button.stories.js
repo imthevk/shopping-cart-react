@@ -4,4 +4,4 @@ import Button from './Button';
 
 storiesOf('Button', module)
   .add('Primary', () => <Button>Checkout</Button>)
-  .add('To cart', () => <Button color="grey">Your cart</Button>);
+  .add('Clear', () => <Button color="grey">Clear</Button>);
