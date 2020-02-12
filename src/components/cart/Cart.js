@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from 'components/button/Button';
 import ButtonIcon from 'components/button/ButtonIcon';
 import MediumLabel from 'components/label/MediumLabel';
+import close from 'assets/icons/close.svg';
 import CartItem from './cartItem/CartItem';
 
 const CartWrapper = styled.div`
@@ -66,7 +67,7 @@ const Cart = () => {
     <CartWrapper>
       <HeadingWrapper>
         <Heading>Your Cart</Heading>
-        <CloseCart />
+        <CloseCart icon={close} />
       </HeadingWrapper>
       <ItemsWrapper>
         <CartItem />
