@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Button from 'components/button/Button';
 import MediumLabel from 'components/label/MediumLabel';
 
@@ -35,17 +36,22 @@ const AddToCart = styled(Button)`
   width: 100%;
 `;
 
-const Product = () => {
+const Product = props => {
+  const { addToCart } = props;
   return (
     <ProductWrapper>
       <ProductImg src="https://source.unsplash.com/300x400" alt="product_photo" />
       <InnerWrapper>
         <MediumLabel>Pies Shiba Inu</MediumLabel>
         <Price>24.99zł</Price>
-        <AddToCart>Add to cart</AddToCart>
+        <AddToCart onClick={addToCart}>Add to cart</AddToCart>
       </InnerWrapper>
     </ProductWrapper>
   );
+};
+
+Product.propTypes = {
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default Product;

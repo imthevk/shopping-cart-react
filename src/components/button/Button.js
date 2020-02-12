@@ -10,6 +10,7 @@ const Button = styled.button`
   letter-spacing: 0.5px;
   text-transform: uppercase;
   padding: 10px 20px;
+  margin: 5px 0;
   cursor: pointer;
   transition: 0.2s;
   background-color: ${({ color }) => color || 'hsl(195, 100%, 40%)'};

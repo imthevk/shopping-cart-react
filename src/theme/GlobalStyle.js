@@ -8,6 +8,8 @@ const GlobalStyle = createGlobalStyle`
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
   html {
@@ -17,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-size: 1.6rem;
     font-family: 'Montserrat', sans-serif;
+  }
+
+  #root{
+    position: relative;
   }
 
 `;
