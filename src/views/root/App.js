@@ -58,7 +58,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { cartIsOpen } = this.state;
+    const { cartIsOpen, productsInCart } = this.state;
     const contextElements = {
       addToCart: this.addToCartHandle,
       closeCart: this.closeCartHandle,
@@ -71,7 +71,7 @@ class App extends React.Component {
           <ProductsList />
           <Blur isOpen={cartIsOpen} />
         </ViewWrapper>
-        <Cart isOpen={cartIsOpen} closeCart={this.closeCartHandle} />
+        <Cart isOpen={cartIsOpen} products={productsInCart} closeCart={this.closeCartHandle} />
       </AppContext.Provider>
     );
   }

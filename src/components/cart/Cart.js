@@ -74,23 +74,15 @@ const Price = styled(MediumLabel)`
 `;
 
 const Cart = props => {
-  const { isOpen, closeCart } = props;
+  const { isOpen, products, closeCart } = props;
+  const cartItems = products.map(product => <CartItem key={product.id} product={product} />);
   return (
     <CartWrapper isOpen={isOpen}>
       <HeadingWrapper>
         <Heading>Your Cart</Heading>
         <CloseCart icon={close} onClick={closeCart} />
       </HeadingWrapper>
-      <ItemsWrapper>
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
-      </ItemsWrapper>
+      <ItemsWrapper>{cartItems}</ItemsWrapper>
       <SummaryWrapper>
         <TotalWrapper>
           <Total>Total</Total>
@@ -105,6 +97,7 @@ const Cart = props => {
 
 Cart.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  products: PropTypes.arrayOf.isRequired,
   closeCart: PropTypes.func.isRequired,
 };
 

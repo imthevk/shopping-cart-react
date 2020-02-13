@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import MediumLabel from 'components/label/MediumLabel';
 import ButtonIcon from 'components/button/ButtonIcon';
 import remove from 'assets/icons/remove.svg';
@@ -65,22 +66,32 @@ const Remove = styled(ButtonIcon)`
   }
 `;
 
-const CartItem = () => {
+const CartItem = ({ product }) => {
+  const { title, img, price, quantity } = product;
   return (
     <ItemWrapper>
-      <ItemImage src="https://source.unsplash.com/90x120" alt="product_photo" />
+      <ItemImage src={img} alt={title} />
       <InnerWrapper>
-        <Title>Pie Shiba Inu</Title>
-        <Price>24.99zł</Price>
+        <Title>{title}</Title>
+        <Price>{price}</Price>
         <QuantityForm>
           <QuantityButton type="button" value="-" />
-          <QuantityInput type="text" />
+          <QuantityInput type="text" value={quantity} />
           <QuantityButton type="button" value="+" />
         </QuantityForm>
       </InnerWrapper>
       <Remove icon={remove} />
     </ItemWrapper>
   );
+};
+
+CartItem.propTypes = {
+  product: PropTypes.shape({
+    title: PropTypes.string,
+    price: PropTypes.string,
+    img: PropTypes.string,
+    quantity: PropTypes.number,
+  }).isRequired,
 };
 
 export default CartItem;
