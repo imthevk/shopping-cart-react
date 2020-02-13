@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AppContext from 'context';
 import PropTypes from 'prop-types';
 import Button from 'components/button/Button';
 import MediumLabel from 'components/label/MediumLabel';
@@ -36,22 +37,30 @@ const AddToCart = styled(Button)`
   width: 100%;
 `;
 
-const Product = props => {
-  const { addToCart } = props;
+const Product = ({ product }) => {
+  const { title, price, img } = product;
   return (
-    <ProductWrapper>
-      <ProductImg src="https://source.unsplash.com/300x400" alt="product_photo" />
-      <InnerWrapper>
-        <MediumLabel>Pies Shiba Inu</MediumLabel>
-        <Price>24.99zł</Price>
-        <AddToCart onClick={addToCart}>Add to cart</AddToCart>
-      </InnerWrapper>
-    </ProductWrapper>
+    <AppContext.Consumer>
+      {context => (
+        <ProductWrapper>
+          <ProductImg src={img} alt={title} />
+          <InnerWrapper>
+            <MediumLabel>{title}</MediumLabel>
+            <Price>{price}</Price>
+            <AddToCart onClick={() => context.addToCart(product)}>Add to cart</AddToCart>
+          </InnerWrapper>
+        </ProductWrapper>
+      )}
+    </AppContext.Consumer>
   );
 };
 
 Product.propTypes = {
-  addToCart: PropTypes.func.isRequired,
+  product: PropTypes.shape({
+    title: PropTypes.string,
+    price: PropTypes.string,
+    img: PropTypes.string,
+  }).isRequired,
 };
 
 export default Product;

@@ -74,12 +74,12 @@ const Price = styled(MediumLabel)`
 `;
 
 const Cart = props => {
-  const { isOpen } = props;
+  const { isOpen, closeCart } = props;
   return (
     <CartWrapper isOpen={isOpen}>
       <HeadingWrapper>
         <Heading>Your Cart</Heading>
-        <CloseCart icon={close} />
+        <CloseCart icon={close} onClick={closeCart} />
       </HeadingWrapper>
       <ItemsWrapper>
         <CartItem />
@@ -105,6 +105,7 @@ const Cart = props => {
 
 Cart.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  closeCart: PropTypes.func.isRequired,
 };
 
 export default Cart;
