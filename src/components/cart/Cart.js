@@ -73,8 +73,17 @@ const Price = styled(MediumLabel)`
   font-size: 1.8rem;
 `;
 
+const EmptyCart = styled.span`
+  display: block;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400;
+  color: lightgray;
+  padding-top: 80px;
+`;
+
 const Cart = props => {
-  const { isOpen, products, closeCart } = props;
+  const { isOpen, products, closeCart, clearBasket, totalPrice } = props;
   const cartItems = products.map(product => <CartItem key={product.id} product={product} />);
   return (
     <CartWrapper isOpen={isOpen}>
@@ -82,14 +91,18 @@ const Cart = props => {
         <Heading>Your Cart</Heading>
         <CloseCart icon={close} onClick={closeCart} />
       </HeadingWrapper>
-      <ItemsWrapper>{cartItems}</ItemsWrapper>
+      <ItemsWrapper>
+        {cartItems.length ? cartItems : <EmptyCart>Your cart is empty...</EmptyCart>}
+      </ItemsWrapper>
       <SummaryWrapper>
         <TotalWrapper>
           <Total>Total</Total>
-          <Price>0.00$</Price>
+          <Price>{totalPrice}$</Price>
         </TotalWrapper>
         <Button>Checkout</Button>
-        <Button color="grey">Clear basket</Button>
+        <Button color="grey" onClick={clearBasket}>
+          Clear basket
+        </Button>
       </SummaryWrapper>
     </CartWrapper>
   );
@@ -97,8 +110,10 @@ const Cart = props => {
 
 Cart.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  products: PropTypes.arrayOf.isRequired,
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
   closeCart: PropTypes.func.isRequired,
+  clearBasket: PropTypes.func.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
 
 export default Cart;

@@ -46,7 +46,7 @@ const Product = ({ product }) => {
           <ProductImg src={img} alt={title} />
           <InnerWrapper>
             <MediumLabel>{title}</MediumLabel>
-            <Price>{price}</Price>
+            <Price>{price}$</Price>
             <AddToCart onClick={() => context.addToCart(product)}>Add to cart</AddToCart>
           </InnerWrapper>
         </ProductWrapper>
@@ -57,9 +57,9 @@ const Product = ({ product }) => {
 
 Product.propTypes = {
   product: PropTypes.shape({
-    title: PropTypes.string,
-    price: PropTypes.string,
-    img: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    img: PropTypes.string.isRequired,
   }).isRequired,
 };
 

@@ -26,29 +26,29 @@ class App extends React.Component {
   state = {
     cartIsOpen: false,
     productsInCart: [],
+    totalPrice: 0,
   };
 
   addToCartHandle = product => {
-    const { id } = product;
-    const { productsInCart } = this.state;
-    let inBasket = [...productsInCart];
+    const { id, price } = product;
+    let { productsInCart, totalPrice } = this.state;
 
-    const itemPos = inBasket.map(item => item.id).indexOf(id);
+    const itemPos = productsInCart.map(item => item.id).indexOf(id);
 
     if (itemPos !== -1) {
-      inBasket[itemPos].quantity += 1;
-      this.setState({
-        cartIsOpen: true,
-        productsInCart: inBasket,
-      });
+      productsInCart[itemPos].quantity += 1;
     } else {
       const item = { ...product, quantity: 1 };
-      inBasket = [...inBasket, item];
-      this.setState({
-        cartIsOpen: true,
-        productsInCart: inBasket,
-      });
+      productsInCart = [...productsInCart, item];
     }
+
+    totalPrice += price;
+
+    this.setState({
+      cartIsOpen: true,
+      productsInCart,
+      totalPrice,
+    });
   };
 
   closeCartHandle = () => {
@@ -57,11 +57,59 @@ class App extends React.Component {
     });
   };
 
+  clearBasketHandle = () => {
+    this.setState({
+      productsInCart: [],
+      totalPrice: 0,
+    });
+  };
+
+  deleteItemHandle = (productId, price, quantity) => {
+    let { productsInCart, totalPrice } = this.state;
+    productsInCart = productsInCart.filter(product => product.id !== productId);
+    totalPrice -= price * quantity;
+
+    this.setState({
+      productsInCart,
+      totalPrice,
+    });
+  };
+
+  quantityButtonHandle = (btnType, productId) => {
+    let { totalPrice } = this.state;
+    const { productsInCart } = this.state;
+
+    const productPos = productsInCart.findIndex(product => product.id === productId);
+
+    const quantityItem = productsInCart[productPos].quantity;
+
+    if (quantityItem > 1) {
+      if (btnType === 'plus') {
+        productsInCart[productPos].quantity += 1;
+        totalPrice += productsInCart[productPos].price;
+      } else {
+        productsInCart[productPos].quantity -= 1;
+        totalPrice -= productsInCart[productPos].price;
+      }
+    } else if (quantityItem === 1 && btnType === 'plus') {
+      productsInCart[productPos].quantity += 1;
+      totalPrice += productsInCart[productPos].price;
+    }
+
+    this.setState({
+      productsInCart,
+      totalPrice,
+    });
+  };
+
   render() {
-    const { cartIsOpen, productsInCart } = this.state;
+    const { cartIsOpen, productsInCart, totalPrice } = this.state;
     const contextElements = {
       addToCart: this.addToCartHandle,
       closeCart: this.closeCartHandle,
+      deleteItem: this.deleteItemHandle,
+      itemQuantity: this.quantityButtonHandle,
+      inputQuantity: this.quantityInputHandle,
     };
 
     return (
@@ -71,7 +119,13 @@ class App extends React.Component {
           <ProductsList />
           <Blur isOpen={cartIsOpen} />
         </ViewWrapper>
-        <Cart isOpen={cartIsOpen} products={productsInCart} closeCart={this.closeCartHandle} />
+        <Cart
+          isOpen={cartIsOpen}
+          products={productsInCart}
+          closeCart={this.closeCartHandle}
+          clearBasket={this.clearBasketHandle}
+          totalPrice={totalPrice}
+        />
       </AppContext.Provider>
     );
   }

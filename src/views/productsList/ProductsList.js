@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import MediumLabel from 'components/label/MediumLabel';
 import Product from 'components/product/Product';
 import device from 'responsive/Device';
 
-const ProductsListwrapper = styled.div`
+const ProductsListWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 300px);
   justify-content: center;
   grid-gap: 30px;
   position: relative;
+  max-width: 1500px;
+  margin: 0 auto;
   @media ${device.tablet} {
     grid-template-columns: repeat(2, 300px);
   }
@@ -20,41 +23,50 @@ const ProductsListwrapper = styled.div`
   }
 `;
 
+const ProductsListLabel = styled(MediumLabel)`
+  text-align: left;
+  font-size: 3rem;
+  color: hsl(195, 100%, 40%);
+  padding: 40px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+`;
+
 const data = [
   {
     id: 1,
     title: 'Jacket',
-    price: '379.00',
+    price: 379,
     img: 'https://source.unsplash.com/300x400',
   },
   {
     id: 2,
     title: 'Jeans',
-    price: '249.00',
+    price: 249,
     img: 'https://source.unsplash.com/300x400',
   },
   {
     id: 3,
     title: 'Sweatshirt',
-    price: '79.00',
+    price: 79,
     img: 'https://source.unsplash.com/300x400',
   },
   {
     id: 4,
     title: 'Socks',
-    price: '24.00',
+    price: 24,
     img: 'https://source.unsplash.com/300x400',
   },
   {
     id: 5,
     title: 'Hoody',
-    price: '129.00',
+    price: 129,
     img: 'https://source.unsplash.com/300x400',
   },
   {
     id: 6,
     title: 'Boots',
-    price: '289.00',
+    price: 289,
     img: 'https://source.unsplash.com/300x400',
   },
 ];
@@ -64,7 +76,12 @@ class ProductsList extends React.Component {
 
   render() {
     const products = data.map(product => <Product key={product.id} product={product} />);
-    return <ProductsListwrapper>{products}</ProductsListwrapper>;
+    return (
+      <>
+        <ProductsListLabel>React Shopping Cart</ProductsListLabel>
+        <ProductsListWrapper>{products}</ProductsListWrapper>
+      </>
+    );
   }
 }
 

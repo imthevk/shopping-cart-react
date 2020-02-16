@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AppContext from 'context';
 import PropTypes from 'prop-types';
 import MediumLabel from 'components/label/MediumLabel';
 import ButtonIcon from 'components/button/ButtonIcon';
@@ -56,6 +57,7 @@ const QuantityButton = styled.input`
 
 const QuantityInput = styled.input`
   border: 1px solid lightgrey;
+  background-color: white;
   font-size: 1.4rem;
   text-align: center;
 `;
@@ -67,30 +69,43 @@ const Remove = styled(ButtonIcon)`
 `;
 
 const CartItem = ({ product }) => {
-  const { title, img, price, quantity } = product;
+  const { id, title, img, price, quantity } = product;
   return (
-    <ItemWrapper>
-      <ItemImage src={img} alt={title} />
-      <InnerWrapper>
-        <Title>{title}</Title>
-        <Price>{price}</Price>
-        <QuantityForm>
-          <QuantityButton type="button" value="-" />
-          <QuantityInput type="text" value={quantity} />
-          <QuantityButton type="button" value="+" />
-        </QuantityForm>
-      </InnerWrapper>
-      <Remove icon={remove} />
-    </ItemWrapper>
+    <AppContext.Consumer>
+      {context => (
+        <ItemWrapper>
+          <ItemImage src={img} alt={title} />
+          <InnerWrapper>
+            <Title>{title}</Title>
+            <Price>{price}$</Price>
+            <QuantityForm>
+              <QuantityButton
+                type="button"
+                value="-"
+                onClick={() => context.itemQuantity('minus', id)}
+              />
+              <QuantityInput type="text" value={quantity} name={id} disabled />
+              <QuantityButton
+                type="button"
+                value="+"
+                onClick={() => context.itemQuantity('plus', id)}
+              />
+            </QuantityForm>
+          </InnerWrapper>
+          <Remove icon={remove} onClick={() => context.deleteItem(id, price, quantity)} />
+        </ItemWrapper>
+      )}
+    </AppContext.Consumer>
   );
 };
 
 CartItem.propTypes = {
   product: PropTypes.shape({
-    title: PropTypes.string,
-    price: PropTypes.string,
-    img: PropTypes.string,
-    quantity: PropTypes.number,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    img: PropTypes.string.isRequired,
+    quantity: PropTypes.number.isRequired,
   }).isRequired,
 };
 
