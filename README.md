@@ -25,7 +25,7 @@ $ npm start # or yarn start
 ```
 
 ## Description
-This simple shopping cart.
+This is a simple shopping cart.
  
 ## Technologies
 Project uses:
