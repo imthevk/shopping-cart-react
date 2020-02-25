@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import MediumLabel from 'components/label/MediumLabel';
+import PropTypes from 'prop-types';
 import Product from 'components/product/Product';
 import device from 'responsive/Device';
+import { connect } from 'react-redux';
 
 const ProductsListWrapper = styled.div`
   display: grid;
@@ -32,57 +34,27 @@ const ProductsListLabel = styled(MediumLabel)`
   margin: 0 auto;
 `;
 
-const data = [
-  {
-    id: 1,
-    title: 'Jacket',
-    price: 379,
-    img: 'https://source.unsplash.com/300x400',
-  },
-  {
-    id: 2,
-    title: 'Jeans',
-    price: 249,
-    img: 'https://source.unsplash.com/300x400',
-  },
-  {
-    id: 3,
-    title: 'Sweatshirt',
-    price: 79,
-    img: 'https://source.unsplash.com/300x400',
-  },
-  {
-    id: 4,
-    title: 'Socks',
-    price: 24,
-    img: 'https://source.unsplash.com/300x400',
-  },
-  {
-    id: 5,
-    title: 'Hoody',
-    price: 129,
-    img: 'https://source.unsplash.com/300x400',
-  },
-  {
-    id: 6,
-    title: 'Boots',
-    price: 289,
-    img: 'https://source.unsplash.com/300x400',
-  },
-];
+const ProductsList = ({ data }) => {
+  const products = data.map(product => <Product key={product.id} product={product} />);
+  return (
+    <>
+      <ProductsListLabel>React Shopping Cart</ProductsListLabel>
+      <ProductsListWrapper>{products}</ProductsListWrapper>
+    </>
+  );
+};
 
-class ProductsList extends React.Component {
-  state = {};
+ProductsList.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
-  render() {
-    const products = data.map(product => <Product key={product.id} product={product} />);
-    return (
-      <>
-        <ProductsListLabel>React Shopping Cart</ProductsListLabel>
-        <ProductsListWrapper>{products}</ProductsListWrapper>
-      </>
-    );
-  }
-}
+const mapStateToProps = state => {
+  const { data } = state;
+  return { data };
+  //  zwraca obiekt z propsem który zostanie podany do tego komponentu
+};
+//  mozna to zapisac też w krótszy sposób:
+//  const mapStateToProps = ({data}) => ({data});
 
-export default ProductsList;
+export default connect(mapStateToProps)(ProductsList);
+// connect przyjmuje z prawej strony komponent a z lewej mapStateToProps

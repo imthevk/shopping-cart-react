@@ -4,6 +4,9 @@ import AppContext from 'context';
 import Cart from 'components/cart/Cart';
 import ProductsList from 'views/productsList/ProductsList';
 import GlobalStyle from 'theme/GlobalStyle';
+import { Provider } from 'react-redux';
+import store from 'store';
+// import { itemFetched } from 'actions';
 
 const ViewWrapper = styled.div`
   position: relative;
@@ -113,20 +116,22 @@ class App extends React.Component {
     };
 
     return (
-      <AppContext.Provider value={contextElements}>
-        <GlobalStyle />
-        <ViewWrapper>
-          <ProductsList />
-          <Blur isOpen={cartIsOpen} />
-        </ViewWrapper>
-        <Cart
-          isOpen={cartIsOpen}
-          products={productsInCart}
-          closeCart={this.closeCartHandle}
-          clearBasket={this.clearBasketHandle}
-          totalPrice={totalPrice}
-        />
-      </AppContext.Provider>
+      <Provider store={store}>
+        <AppContext.Provider value={contextElements}>
+          <ViewWrapper>
+            <ProductsList />
+            <Blur isOpen={cartIsOpen} />
+          </ViewWrapper>
+          <Cart
+            isOpen={cartIsOpen}
+            products={productsInCart}
+            closeCart={this.closeCartHandle}
+            clearBasket={this.clearBasketHandle}
+            totalPrice={totalPrice}
+          />
+          <GlobalStyle />
+        </AppContext.Provider>
+      </Provider>
     );
   }
 }
