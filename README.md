@@ -32,5 +32,6 @@ This is a simple shopping cart.
 ## Technologies
 Project uses:
 * React
+* Redux
 * Styled Component
 
