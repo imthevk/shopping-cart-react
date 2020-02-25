@@ -1,5 +1,7 @@
 # React - shopping-cart
 
+https://rawfour.github.io/shopping-cart-react/
+
 
 ## Table of contents
 * [Instructions](#Instructions)
@@ -25,7 +27,7 @@ $ npm start # or yarn start
 ```
 
 ## Description
-This simple shopping cart.
+This is a simple shopping cart.
  
 ## Technologies
 Project uses:
