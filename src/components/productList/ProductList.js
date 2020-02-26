@@ -49,7 +49,7 @@ ProductsList.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { data } = state;
+  const { data } = state.productList;
   return { data };
   //  zwraca obiekt z propsem który zostanie podany do tego komponentu
 };

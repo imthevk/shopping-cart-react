@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import AppContext from 'context';
+// import AppContext from 'context';
 import PropTypes from 'prop-types';
 import Button from 'components/button/Button';
 import MediumLabel from 'components/label/MediumLabel';
+import { connect } from 'react-redux';
+import { addProduct as addProductAction } from 'services/cart/actions';
 
 const ProductImg = styled.img`
   min-height: 400px;
@@ -37,21 +39,18 @@ const AddToCart = styled(Button)`
   width: 100%;
 `;
 
-const Product = ({ product }) => {
+const Product = props => {
+  const { product, addProduct } = props;
   const { title, price, img } = product;
   return (
-    <AppContext.Consumer>
-      {context => (
-        <ProductWrapper>
-          <ProductImg src={img} alt={title} />
-          <InnerWrapper>
-            <MediumLabel>{title}</MediumLabel>
-            <Price>{price}$</Price>
-            <AddToCart onClick={() => context.addToCart(product)}>Add to cart</AddToCart>
-          </InnerWrapper>
-        </ProductWrapper>
-      )}
-    </AppContext.Consumer>
+    <ProductWrapper>
+      <ProductImg src={img} alt={title} />
+      <InnerWrapper>
+        <MediumLabel>{title}</MediumLabel>
+        <Price>{price}$</Price>
+        <AddToCart onClick={() => addProduct(product)}>Add to cart</AddToCart>
+      </InnerWrapper>
+    </ProductWrapper>
   );
 };
 
@@ -61,6 +60,11 @@ Product.propTypes = {
     price: PropTypes.number.isRequired,
     img: PropTypes.string.isRequired,
   }).isRequired,
+  addProduct: PropTypes.func.isRequired,
 };
 
-export default Product;
+const mapDispatchToProps = dispatch => ({
+  addProduct: product => dispatch(addProductAction(product)),
+});
+
+export default connect(null, mapDispatchToProps)(Product);

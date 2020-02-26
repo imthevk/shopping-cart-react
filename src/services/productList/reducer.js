@@ -39,8 +39,8 @@ const initialState = {
   ],
 };
 
-const rootReducer = (state = initialState) => {
+const productListReducer = (state = initialState) => {
   return state;
 };
 
-export default rootReducer;
+export default productListReducer;

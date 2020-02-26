@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import AppContext from 'context';
 import Cart from 'components/cart/Cart';
-import ProductsList from 'views/productsList/ProductsList';
+import ProductList from 'components/productList/ProductList';
 import GlobalStyle from 'theme/GlobalStyle';
 import { Provider } from 'react-redux';
-import store from 'store';
+import store from 'services/store';
 // import { itemFetched } from 'actions';
 
 const ViewWrapper = styled.div`
@@ -119,7 +119,7 @@ class App extends React.Component {
       <Provider store={store}>
         <AppContext.Provider value={contextElements}>
           <ViewWrapper>
-            <ProductsList />
+            <ProductList />
             <Blur isOpen={cartIsOpen} />
           </ViewWrapper>
           <Cart
