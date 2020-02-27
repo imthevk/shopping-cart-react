@@ -5,6 +5,13 @@ import Button from 'components/button/Button';
 import ButtonIcon from 'components/button/ButtonIcon';
 import MediumLabel from 'components/label/MediumLabel';
 import close from 'assets/icons/close.svg';
+import { connect } from 'react-redux';
+import {
+  closeCart as closeCartAction,
+  clearBasket as clearBasketAction,
+  removeProduct as removeProductAction,
+  changeProductQuantity as changeProductQuantityAction,
+} from 'services/cart/actions';
 import CartItem from './cartItem/CartItem';
 
 const CartWrapper = styled.div`
@@ -83,8 +90,24 @@ const EmptyCart = styled.span`
 `;
 
 const Cart = props => {
-  const { isOpen, products, closeCart, clearBasket, totalPrice } = props;
-  const cartItems = products.map(product => <CartItem key={product.id} product={product} />);
+  const {
+    isOpen,
+    products,
+    totalPrice,
+    closeCart,
+    clearBasket,
+    removeProduct,
+    changeProductQuantity,
+  } = props;
+
+  const cartItems = products.map(product => (
+    <CartItem
+      key={product.id}
+      product={product}
+      changeProductQuantity={changeProductQuantity}
+      removeProduct={removeProduct}
+    />
+  ));
   return (
     <CartWrapper isOpen={isOpen}>
       <HeadingWrapper>
@@ -114,6 +137,21 @@ Cart.propTypes = {
   closeCart: PropTypes.func.isRequired,
   clearBasket: PropTypes.func.isRequired,
   totalPrice: PropTypes.number.isRequired,
+  removeProduct: PropTypes.func.isRequired,
+  changeProductQuantity: PropTypes.func.isRequired,
 };
 
-export default Cart;
+const mapStateToProps = state => {
+  const { isOpen, products, totalPrice } = state.cart;
+  return { isOpen, products, totalPrice };
+};
+
+const mapDispatchToProps = dispatch => ({
+  closeCart: () => dispatch(closeCartAction()),
+  clearBasket: () => dispatch(clearBasketAction()),
+  removeProduct: product => dispatch(removeProductAction(product)),
+  changeProductQuantity: (btnType, product) =>
+    dispatch(changeProductQuantityAction(btnType, product)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

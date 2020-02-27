@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import AppContext from 'context';
 import PropTypes from 'prop-types';
 import MediumLabel from 'components/label/MediumLabel';
 import ButtonIcon from 'components/button/ButtonIcon';
@@ -68,34 +67,33 @@ const Remove = styled(ButtonIcon)`
   }
 `;
 
-const CartItem = ({ product }) => {
+const CartItem = props => {
+  const { removeProduct, changeProductQuantity, product } = props;
   const { id, title, img, price, quantity } = product;
+
   return (
-    <AppContext.Consumer>
-      {context => (
-        <ItemWrapper>
-          <ItemImage src={img} alt={title} />
-          <InnerWrapper>
-            <Title>{title}</Title>
-            <Price>{price}$</Price>
-            <QuantityForm>
-              <QuantityButton
-                type="button"
-                value="-"
-                onClick={() => context.itemQuantity('minus', id)}
-              />
-              <QuantityInput type="text" value={quantity} name={id} disabled />
-              <QuantityButton
-                type="button"
-                value="+"
-                onClick={() => context.itemQuantity('plus', id)}
-              />
-            </QuantityForm>
-          </InnerWrapper>
-          <Remove icon={remove} onClick={() => context.deleteItem(id, price, quantity)} />
-        </ItemWrapper>
-      )}
-    </AppContext.Consumer>
+    <ItemWrapper>
+      <ItemImage src={img} alt={title} />
+      <InnerWrapper>
+        <Title>{title}</Title>
+        <Price>{price}$</Price>
+        <QuantityForm>
+          <QuantityButton
+            type="button"
+            value="-"
+            onClick={() => changeProductQuantity('minus', product)}
+            disabled={product.quantity === 1 && true}
+          />
+          <QuantityInput type="text" value={quantity} name={id} disabled />
+          <QuantityButton
+            type="button"
+            value="+"
+            onClick={() => changeProductQuantity('plus', product)}
+          />
+        </QuantityForm>
+      </InnerWrapper>
+      <Remove icon={remove} onClick={() => removeProduct(product)} />
+    </ItemWrapper>
   );
 };
 
@@ -107,6 +105,8 @@ CartItem.propTypes = {
     img: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
   }).isRequired,
+  removeProduct: PropTypes.func.isRequired,
+  changeProductQuantity: PropTypes.func.isRequired,
 };
 
 export default CartItem;

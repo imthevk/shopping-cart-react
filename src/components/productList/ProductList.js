@@ -6,7 +6,7 @@ import Product from 'components/product/Product';
 import device from 'responsive/Device';
 import { connect } from 'react-redux';
 
-const ProductsListWrapper = styled.div`
+const ProductListWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 300px);
   justify-content: center;
@@ -25,7 +25,7 @@ const ProductsListWrapper = styled.div`
   }
 `;
 
-const ProductsListLabel = styled(MediumLabel)`
+const ProductListLabel = styled(MediumLabel)`
   text-align: left;
   font-size: 3rem;
   color: hsl(195, 100%, 40%);
@@ -34,17 +34,17 @@ const ProductsListLabel = styled(MediumLabel)`
   margin: 0 auto;
 `;
 
-const ProductsList = ({ data }) => {
+const ProductList = ({ data }) => {
   const products = data.map(product => <Product key={product.id} product={product} />);
   return (
     <>
-      <ProductsListLabel>React Shopping Cart</ProductsListLabel>
-      <ProductsListWrapper>{products}</ProductsListWrapper>
+      <ProductListLabel>React Shopping Cart</ProductListLabel>
+      <ProductListWrapper>{products}</ProductListWrapper>
     </>
   );
 };
 
-ProductsList.propTypes = {
+ProductList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
@@ -53,8 +53,8 @@ const mapStateToProps = state => {
   return { data };
   //  zwraca obiekt z propsem który zostanie podany do tego komponentu
 };
-//  mozna to zapisac też w krótszy sposób:
+//  można to zapisac też w krótszy sposób:
 //  const mapStateToProps = ({data}) => ({data});
 
-export default connect(mapStateToProps)(ProductsList);
-// connect przyjmuje z prawej strony komponent a z lewej mapStateToProps
+export default connect(mapStateToProps)(ProductList);
+// connect przyjmuje z prawej strony komponent a z lewej mapStateToProps oraz mapDispatchToProps

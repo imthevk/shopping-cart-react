@@ -1,59 +1,96 @@
 import {
   ADD_PRODUCT,
-  // REMOVE_PRODUCT,
-  // CHANGE_PRODUCT_QUANTITY
+  REMOVE_PRODUCT,
+  CHANGE_PRODUCT_QUANTITY,
+  CLOSE_CART,
+  CLEAR_BASKET,
 } from 'services/cart/actionTypes';
 
 const initialState = {
+  isOpen: false,
   products: [],
+  totalPrice: 0,
 };
 
 const cartReducer = (state = initialState, action) => {
-  if (action.type === ADD_PRODUCT) {
-    const { products } = state;
-    let product = action.payload;
+  switch (action.type) {
+    case ADD_PRODUCT: {
+      let product = action.payload;
+      const newProductList = state.products;
+      const productIndex = newProductList.map(item => item.id).indexOf(product.id);
+      const total = state.totalPrice + product.price;
+      if (productIndex !== -1) {
+        newProductList[productIndex].quantity += 1;
+      } else {
+        product = { ...product, quantity: 1 };
+        newProductList.push(product);
+      }
 
-    const newProductList = products;
-
-    const productIndex = newProductList.map(item => item.id).indexOf(product.id);
-
-    if (productIndex !== -1) {
-      newProductList[productIndex].quantity += 1;
-    } else {
-      product = { ...product, quantity: 1 };
-      newProductList.push(product);
+      return {
+        ...state,
+        products: [...newProductList],
+        isOpen: true,
+        totalPrice: total,
+      };
     }
 
-    return {
-      ...state,
-      products: [...newProductList],
-    };
+    case REMOVE_PRODUCT: {
+      const product = action.payload;
+      const newProductList = state.products.filter(item => item.id !== product.id);
+      const total = state.totalPrice - product.price * product.quantity;
+
+      return {
+        ...state,
+        products: [...newProductList],
+        totalPrice: total,
+      };
+    }
+
+    case CHANGE_PRODUCT_QUANTITY: {
+      const { btnType, product } = action.payload;
+      const { products, totalPrice } = state;
+
+      const newProductList = products;
+      let total = totalPrice;
+
+      const productPos = newProductList.findIndex(item => item.id === product.id);
+
+      if (product.quantity > 1) {
+        if (btnType === 'plus') {
+          newProductList[productPos].quantity += 1;
+          total += newProductList[productPos].price;
+        } else {
+          newProductList[productPos].quantity -= 1;
+          total -= newProductList[productPos].price;
+        }
+      } else if (product.quantity === 1 && btnType === 'plus') {
+        newProductList[productPos].quantity += 1;
+        total += newProductList[productPos].price;
+      }
+
+      return {
+        ...state,
+        products: [...newProductList],
+        totalPrice: total,
+      };
+    }
+
+    case CLOSE_CART:
+      return {
+        ...state,
+        isOpen: false,
+      };
+
+    case CLEAR_BASKET:
+      return {
+        ...state,
+        products: [],
+        totalPrice: 0,
+      };
+
+    default:
+      return state;
   }
-  //   switch (action.type) {
-  //     case ADD_PRODUCT:
-  //       console.log(action);
-
-  //       return {
-  //         ...state,
-  //         products: action.payload,
-  //       };
-  //     case REMOVE_PRODUCT:
-  //       console.log('usowanie');
-  //       return {
-  //         ...state,
-  //         removeProduct: action.payload,
-  //       };
-  //     case CHANGE_PRODUCT_QUANTITY:
-  //       console.log('zmiana ilosci');
-  //       return {
-  //         ...state,
-  //         changeProductQuantity: action.payload,
-  //       };
-  //     default:
-  //       return state;
-  //   }
-
-  return state;
 };
 
 export default cartReducer;
