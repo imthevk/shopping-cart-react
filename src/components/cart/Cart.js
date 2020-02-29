@@ -23,6 +23,7 @@ const CartWrapper = styled.div`
   padding: 0 20px;
   background-color: white;
   position: fixed;
+  z-index: 99999;
   top: 0;
   right: 0;
   transition: 0.4s;

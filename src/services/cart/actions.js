@@ -2,6 +2,7 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   CHANGE_PRODUCT_QUANTITY,
+  OPEN_CART,
   CLOSE_CART,
   CLEAR_BASKET,
 } from 'services/cart/actionTypes';
@@ -19,6 +20,10 @@ export const removeProduct = product => ({
 export const changeProductQuantity = (btnType, product) => ({
   type: CHANGE_PRODUCT_QUANTITY,
   payload: { btnType, product },
+});
+
+export const openCart = () => ({
+  type: OPEN_CART,
 });
 
 export const closeCart = () => ({

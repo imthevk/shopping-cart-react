@@ -2,9 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cart from 'components/cart/Cart';
+import ButtonIcon from 'components/button/ButtonIcon';
 import ProductList from 'components/productList/ProductList';
+import cart from 'assets/icons/cart.svg';
 import GlobalStyle from 'theme/GlobalStyle';
 import { connect } from 'react-redux';
+
+import { openCart as openCartAction } from 'services/cart/actions';
 
 const ViewWrapper = styled.div`
   position: relative;
@@ -21,6 +25,28 @@ const Blur = styled.div`
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   background-color: rgba(0, 0, 0, 0.9);
+`;
+
+const CartButton = styled(ButtonIcon)`
+  height: 60px;
+  width: 60px;
+  position: fixed;
+  top: 100vh;
+  right: 50px;
+  transform: translateY(calc(-100% - 50px));
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: 0.2s;
+  cursor: pointer;
+  background-color: ${({ color }) => color || 'hsl(195, 100%, 40%)'};
+  &:hover {
+    transform: translateY(calc(-100% - 50px)) scale(1.1);
+  }
 `;
 
 class AppContainer extends React.Component {
@@ -57,7 +83,7 @@ class AppContainer extends React.Component {
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { isOpen, openCart } = this.props;
 
     return (
       <>
@@ -66,6 +92,7 @@ class AppContainer extends React.Component {
           <Blur isOpen={isOpen} />
         </ViewWrapper>
         <Cart />
+        <CartButton icon={cart} onClick={openCart} />
         <GlobalStyle />
       </>
     );
@@ -74,6 +101,7 @@ class AppContainer extends React.Component {
 
 AppContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  openCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -81,4 +109,8 @@ const mapStateToProps = state => {
   return { isOpen };
 };
 
-export default connect(mapStateToProps)(AppContainer);
+const mapDispatchToProps = dispatch => ({
+  openCart: () => dispatch(openCartAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

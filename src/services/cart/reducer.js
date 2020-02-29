@@ -3,6 +3,7 @@ import {
   REMOVE_PRODUCT,
   CHANGE_PRODUCT_QUANTITY,
   CLOSE_CART,
+  OPEN_CART,
   CLEAR_BASKET,
 } from 'services/cart/actionTypes';
 
@@ -72,6 +73,14 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         products: [...newProductList],
         totalPrice: total,
+      };
+    }
+
+    case OPEN_CART: {
+      console.log(state);
+      return {
+        ...state,
+        isOpen: true,
       };
     }
 
