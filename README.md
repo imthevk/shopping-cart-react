@@ -27,7 +27,7 @@ $ npm start # or yarn start
 ```
 
 ## Description
-This is a simple shopping cart.
+This is a simple shopping cart based on React + Redux
  
 ## Technologies
 Project uses:
