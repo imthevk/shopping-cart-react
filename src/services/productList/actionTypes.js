@@ -1,0 +1,3 @@
+const SORT_PRODUCTS = 'SORT_PRODUCTS';
+
+export default SORT_PRODUCTS;

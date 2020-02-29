@@ -13,6 +13,9 @@ import { openCart as openCartAction } from 'services/cart/actions';
 const ViewWrapper = styled.div`
   position: relative;
   background-color: white;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px;
 `;
 
 const Blur = styled.div`
