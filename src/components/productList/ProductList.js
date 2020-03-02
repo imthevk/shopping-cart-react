@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import MediumLabel from 'components/label/MediumLabel';
+import Filters from 'components/productList/filters/Filters';
 import Sort from 'components/productList/sort/Sort';
+import Button from 'components/button/Button';
 import PropTypes from 'prop-types';
 import Product from 'components/product/Product';
 import device from 'responsive/Device';
 import { connect } from 'react-redux';
-import { sortProducts as sortProductsAction } from 'services/productList/actions';
+import {
+  sortProducts as sortProductsAction,
+  openFilters as openFiltersAction,
+  filterProducts as filterProductsAction,
+} from 'services/productList/actions';
 
 const ProductListWrapper = styled.div`
   display: grid;
@@ -17,6 +23,8 @@ const ProductListWrapper = styled.div`
   grid-gap: 30px;
   position: relative;
   margin: 0 auto;
+  padding-top: 40px;
+  clear: both;
   @media ${device.tablet} {
     grid-template-columns: repeat(2, 300px);
   }
@@ -36,13 +44,25 @@ const ProductListLabel = styled(MediumLabel)`
   margin: 0 auto;
 `;
 
-const ProductList = ({ data, sortProducts }) => {
+const FilterButton = styled(Button)`
+  float: left;
+  margin: 0;
+  padding: 10px 30px;
+`;
+
+const ProductList = ({ data, sortProducts, openFilters, isFiltersOpen, filterProducts }) => {
   const products = data.map(product => <Product key={product.id} product={product} />);
   return (
     <>
       <ProductListLabel>React Shopping Cart</ProductListLabel>
+      <FilterButton onClick={openFilters}>Filter</FilterButton>
       <Sort sortProducts={sortProducts} products={data} />
       <ProductListWrapper>{products}</ProductListWrapper>
+      <Filters
+        isFiltersOpen={isFiltersOpen}
+        openFilters={openFilters}
+        filterProducts={filterProducts}
+      />
     </>
   );
 };
@@ -50,15 +70,20 @@ const ProductList = ({ data, sortProducts }) => {
 ProductList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   sortProducts: PropTypes.func.isRequired,
+  isFiltersOpen: PropTypes.bool.isRequired,
+  openFilters: PropTypes.func.isRequired,
+  filterProducts: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   sortProducts: (value, products) => dispatch(sortProductsAction(value, products)),
+  openFilters: () => dispatch(openFiltersAction()),
+  filterProducts: (filterType, value) => dispatch(filterProductsAction(filterType, value)),
 });
 
 const mapStateToProps = state => {
-  const { data } = state.productList;
-  return { data };
+  const { data, isFiltersOpen } = state.productList;
+  return { data, isFiltersOpen };
   //  zwraca obiekt z propsem który zostanie podany do tego komponentu
 };
 //  można to zapisac też w krótszy sposób:

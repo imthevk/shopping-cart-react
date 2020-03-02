@@ -27,7 +27,7 @@ const CartWrapper = styled.div`
   top: 0;
   right: 0;
   transition: 0.4s;
-  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
+  transform: ${({ isCartOpen }) => (isCartOpen ? 'translateX(0)' : 'translateX(100%)')};
   box-shadow: -5px 2px 20px rgba(0, 0, 0, 0.25), 0 0px 0px rgba(0, 0, 0, 0.22);
 `;
 
@@ -92,7 +92,7 @@ const EmptyCart = styled.span`
 
 const Cart = props => {
   const {
-    isOpen,
+    isCartOpen,
     products,
     totalPrice,
     closeCart,
@@ -110,7 +110,7 @@ const Cart = props => {
     />
   ));
   return (
-    <CartWrapper isOpen={isOpen}>
+    <CartWrapper isCartOpen={isCartOpen}>
       <HeadingWrapper>
         <Heading>Your Cart</Heading>
         <CloseCart icon={close} onClick={closeCart} />
@@ -133,7 +133,7 @@ const Cart = props => {
 };
 
 Cart.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isCartOpen: PropTypes.bool.isRequired,
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   closeCart: PropTypes.func.isRequired,
   clearBasket: PropTypes.func.isRequired,
@@ -143,8 +143,8 @@ Cart.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { isOpen, products, totalPrice } = state.cart;
-  return { isOpen, products, totalPrice };
+  const { isCartOpen, products, totalPrice } = state.cart;
+  return { isCartOpen, products, totalPrice };
 };
 
 const mapDispatchToProps = dispatch => ({

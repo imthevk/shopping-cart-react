@@ -8,7 +8,7 @@ import {
 } from 'services/cart/actionTypes';
 
 const initialState = {
-  isOpen: false,
+  isCartOpen: false,
   products: [],
   totalPrice: 0,
 };
@@ -30,7 +30,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         products: [...newProductList],
-        isOpen: true,
+        isCartOpen: true,
         totalPrice: total,
       };
     }
@@ -80,14 +80,14 @@ const cartReducer = (state = initialState, action) => {
       console.log(state);
       return {
         ...state,
-        isOpen: true,
+        isCartOpen: true,
       };
     }
 
     case CLOSE_CART:
       return {
         ...state,
-        isOpen: false,
+        isCartOpen: false,
       };
 
     case CLEAR_BASKET:

@@ -25,8 +25,8 @@ const Blur = styled.div`
   top: 0;
   left: 0;
   transition: 0.2s;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  opacity: ${({ isCartOpen }) => (isCartOpen ? 1 : 0)};
+  visibility: ${({ isCartOpen }) => (isCartOpen ? 'visible' : 'hidden')};
   background-color: rgba(0, 0, 0, 0.9);
 `;
 
@@ -52,64 +52,28 @@ const CartButton = styled(ButtonIcon)`
   }
 `;
 
-class AppContainer extends React.Component {
-  state = {
-    productsInCart: [],
-    totalPrice: 0,
-  };
-
-  quantityButtonHandle = (btnType, productId) => {
-    let { totalPrice } = this.state;
-    const { productsInCart } = this.state;
-
-    const productPos = productsInCart.findIndex(product => product.id === productId);
-
-    const quantityItem = productsInCart[productPos].quantity;
-
-    if (quantityItem > 1) {
-      if (btnType === 'plus') {
-        productsInCart[productPos].quantity += 1;
-        totalPrice += productsInCart[productPos].price;
-      } else {
-        productsInCart[productPos].quantity -= 1;
-        totalPrice -= productsInCart[productPos].price;
-      }
-    } else if (quantityItem === 1 && btnType === 'plus') {
-      productsInCart[productPos].quantity += 1;
-      totalPrice += productsInCart[productPos].price;
-    }
-
-    this.setState({
-      productsInCart,
-      totalPrice,
-    });
-  };
-
-  render() {
-    const { isOpen, openCart } = this.props;
-
-    return (
-      <>
-        <ViewWrapper>
-          <ProductList />
-          <Blur isOpen={isOpen} />
-        </ViewWrapper>
-        <Cart />
-        <CartButton icon={cart} onClick={openCart} />
-        <GlobalStyle />
-      </>
-    );
-  }
-}
+const AppContainer = ({ isCartOpen, openCart }) => {
+  return (
+    <>
+      <ViewWrapper>
+        <ProductList />
+        <Blur isCartOpen={isCartOpen} />
+      </ViewWrapper>
+      <Cart />
+      <CartButton icon={cart} onClick={openCart} />
+      <GlobalStyle />
+    </>
+  );
+};
 
 AppContainer.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isCartOpen: PropTypes.bool.isRequired,
   openCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-  const { isOpen } = state.cart;
-  return { isOpen };
+  const { isCartOpen } = state.cart;
+  return { isCartOpen };
 };
 
 const mapDispatchToProps = dispatch => ({
