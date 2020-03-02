@@ -73,11 +73,13 @@ const Option = styled(ButtonIcon)`
   font-size: 1.2rem;
   font-weight: 600;
   color: hsl(195, 100%, 40%);
-  border: 2px solid transparent;
+  border-style: solid;
+  border-width: 3px;
+  border-color: ${({ active }) => (active ? 'hsl(195, 100%, 40%)' : 'transparent')};
   background-color: ${({ color }) => color || 'hsl(194.1, 63%, 89.4%)'};
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   &:hover {
-    border: 2px solid hsl(195, 100%, 40%);
+    border: 3px solid hsl(195, 100%, 40%);
     background-color: ${({ color }) => color || 'hsl(194.1, 63%, 89.4%)'};
   }
 `;
@@ -87,35 +89,65 @@ const filters = {
   colors: ['red', 'green', 'blue', 'yellow', 'orange', 'pink', 'gray', 'black', 'white'],
 };
 
-const Filters = ({ isFiltersOpen, openFilters, filterProducts }) => {
-  const sizes = filters.sizes.map(size => (
-    <Option key={size} onClick={() => filterProducts('sizes', size)}>
-      {size}
-    </Option>
-  ));
-  const colors = filters.colors.map(color => (
-    <Option key={color} color={color} onClick={() => filterProducts('colors', color)} />
-  ));
+class Filters extends React.Component {
+  state = {
+    activeFilter: [],
+  };
 
-  return (
-    <FiltersWrapper isFiltersOpen={isFiltersOpen}>
-      <HeadingWrapper>
-        <Heading>Filter</Heading>
-        <CloseFilters icon={close} onClick={openFilters} />
-      </HeadingWrapper>
-      <FilterList>
-        <FilterWrapper>
-          <FilterLabel>Size</FilterLabel>
-          <OptionsWrapper>{sizes}</OptionsWrapper>
-        </FilterWrapper>
-        <FilterWrapper>
-          <FilterLabel>Color</FilterLabel>
-          <OptionsWrapper>{colors}</OptionsWrapper>
-        </FilterWrapper>
-      </FilterList>
-    </FiltersWrapper>
-  );
-};
+  handleActiveFilter = (filterType, value, filterProducts) => {
+    let { activeFilter } = this.state;
+    if (activeFilter.includes(value)) {
+      activeFilter = activeFilter.filter(filter => filter !== value);
+    } else {
+      activeFilter.push(value);
+    }
+    filterProducts(filterType, value);
+    this.setState({
+      activeFilter,
+    });
+  };
+
+  render() {
+    const { activeFilter } = this.state;
+    const { isFiltersOpen, openFilters, filterProducts } = this.props;
+    const sizes = filters.sizes.map(size => (
+      <Option
+        key={size}
+        active={activeFilter.includes(size) && true}
+        onClick={() => this.handleActiveFilter('sizes', size, filterProducts)}
+      >
+        {size}
+      </Option>
+    ));
+    const colors = filters.colors.map(color => (
+      <Option
+        key={color}
+        active={activeFilter.includes(color) && true}
+        color={color}
+        onClick={() => this.handleActiveFilter('colors', color, filterProducts)}
+      />
+    ));
+
+    return (
+      <FiltersWrapper isFiltersOpen={isFiltersOpen}>
+        <HeadingWrapper>
+          <Heading>Filter</Heading>
+          <CloseFilters icon={close} onClick={openFilters} />
+        </HeadingWrapper>
+        <FilterList>
+          <FilterWrapper>
+            <FilterLabel>Size</FilterLabel>
+            <OptionsWrapper>{sizes}</OptionsWrapper>
+          </FilterWrapper>
+          <FilterWrapper>
+            <FilterLabel>Color</FilterLabel>
+            <OptionsWrapper>{colors}</OptionsWrapper>
+          </FilterWrapper>
+        </FilterList>
+      </FiltersWrapper>
+    );
+  }
+}
 
 Filters.propTypes = {
   isFiltersOpen: PropTypes.bool.isRequired,

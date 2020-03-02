@@ -77,7 +77,6 @@ const cartReducer = (state = initialState, action) => {
     }
 
     case OPEN_CART: {
-      console.log(state);
       return {
         ...state,
         isCartOpen: true,

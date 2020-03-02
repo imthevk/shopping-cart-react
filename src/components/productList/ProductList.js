@@ -52,6 +52,7 @@ const FilterButton = styled(Button)`
 
 const ProductList = ({ data, sortProducts, openFilters, isFiltersOpen, filterProducts }) => {
   const products = data.map(product => <Product key={product.id} product={product} />);
+
   return (
     <>
       <ProductListLabel>React Shopping Cart</ProductListLabel>
