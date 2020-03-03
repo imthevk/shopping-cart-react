@@ -39,15 +39,58 @@ const AddToCart = styled(Button)`
   width: 100%;
 `;
 
+const AvailableOptionsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+`;
+
+const AvailableOptionsLabel = styled(MediumLabel)`
+  flex-basis: 100%;
+  text-align: left;
+  font-weight: 400;
+  margin-bottom: 10px;
+`;
+
+const AvailableOption = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  flex-basis: 15px;
+  height: 15px;
+  background-color: ${({ color }) => color || 'white'};
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: gray;
+  box-shadow: ${({ color }) =>
+    color ? '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' : 'none'};
+`;
+
 const Product = props => {
   const { product, addProduct } = props;
-  const { title, price, img } = product;
+  const { title, price, img, sizes, colors } = product;
+
+  const availableColors = colors.map(color => <AvailableOption key={color} color={color} />);
+  const availableSizes = sizes.map(size => <AvailableOption key={size}>{size}</AvailableOption>);
+
   return (
     <ProductWrapper>
       <ProductImg src={img} alt={title} />
       <InnerWrapper>
         <MediumLabel>{title}</MediumLabel>
         <Price>{price}$</Price>
+        <AvailableOptionsWrapper>
+          <AvailableOptionsLabel>Available colors</AvailableOptionsLabel>
+          {availableColors}
+        </AvailableOptionsWrapper>
+
+        <AvailableOptionsWrapper>
+          <AvailableOptionsLabel>Available sizes</AvailableOptionsLabel>
+          {availableSizes}
+        </AvailableOptionsWrapper>
         <AddToCart onClick={() => addProduct(product)}>Add to cart</AddToCart>
       </InnerWrapper>
     </ProductWrapper>
@@ -59,6 +102,8 @@ Product.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     img: PropTypes.string.isRequired,
+    sizes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   addProduct: PropTypes.func.isRequired,
 };
