@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import { addProduct as addProductAction } from 'services/cart/actions';
 
 const ProductImg = styled.img`
-  min-height: 400px;
+  height: 400px;
+  width: 300px;
   display: block;
 `;
 

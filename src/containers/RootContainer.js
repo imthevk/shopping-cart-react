@@ -35,8 +35,8 @@ const CartButton = styled(ButtonIcon)`
   width: 60px;
   position: fixed;
   top: 100vh;
-  right: 50px;
-  transform: translateY(calc(-100% - 50px));
+  right: 40px;
+  transform: translateY(calc(-100% - 30px));
   border-radius: 50%;
   border: none;
   color: white;
@@ -48,7 +48,7 @@ const CartButton = styled(ButtonIcon)`
   cursor: pointer;
   background-color: ${({ color }) => color || 'hsl(195, 100%, 40%)'};
   &:hover {
-    transform: translateY(calc(-100% - 50px)) scale(1.1);
+    transform: translateY(calc(-100% - 30px)) scale(1.1);
   }
 `;
 
