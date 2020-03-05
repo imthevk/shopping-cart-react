@@ -1,23 +1,31 @@
 {
   "files": {
-    "main.js": "/shopping-cart-react/static/js/main.6a87182e.chunk.js",
-    "main.js.map": "/shopping-cart-react/static/js/main.6a87182e.chunk.js.map",
+    "main.js": "/shopping-cart-react/static/js/main.f39bcded.chunk.js",
+    "main.js.map": "/shopping-cart-react/static/js/main.f39bcded.chunk.js.map",
     "runtime-main.js": "/shopping-cart-react/static/js/runtime-main.9110f075.js",
     "runtime-main.js.map": "/shopping-cart-react/static/js/runtime-main.9110f075.js.map",
-    "static/js/2.363d5454.chunk.js": "/shopping-cart-react/static/js/2.363d5454.chunk.js",
-    "static/js/2.363d5454.chunk.js.map": "/shopping-cart-react/static/js/2.363d5454.chunk.js.map",
+    "static/js/2.7777df66.chunk.js": "/shopping-cart-react/static/js/2.7777df66.chunk.js",
+    "static/js/2.7777df66.chunk.js.map": "/shopping-cart-react/static/js/2.7777df66.chunk.js.map",
     "index.html": "/shopping-cart-react/index.html",
-    "precache-manifest.2944c68e4fa86bf39f48812975c85ef8.js": "/shopping-cart-react/precache-manifest.2944c68e4fa86bf39f48812975c85ef8.js",
+    "precache-manifest.c16f35a7873da4a536a5e3c6193a5701.js": "/shopping-cart-react/precache-manifest.c16f35a7873da4a536a5e3c6193a5701.js",
     "service-worker.js": "/shopping-cart-react/service-worker.js",
-    "static/js/2.363d5454.chunk.js.LICENSE.txt": "/shopping-cart-react/static/js/2.363d5454.chunk.js.LICENSE.txt",
+    "static/js/2.7777df66.chunk.js.LICENSE.txt": "/shopping-cart-react/static/js/2.7777df66.chunk.js.LICENSE.txt",
     "static/media/arrow-down.svg": "/shopping-cart-react/static/media/arrow-down.63fbce54.svg",
     "static/media/cart.svg": "/shopping-cart-react/static/media/cart.0de0451e.svg",
     "static/media/close.svg": "/shopping-cart-react/static/media/close.ea4d4547.svg",
-    "static/media/remove.svg": "/shopping-cart-react/static/media/remove.67b8cf8c.svg"
+    "static/media/dress.jpg": "/shopping-cart-react/static/media/dress.7234c5a7.jpg",
+    "static/media/hoody.jpg": "/shopping-cart-react/static/media/hoody.33ca7b77.jpg",
+    "static/media/jacket.jpg": "/shopping-cart-react/static/media/jacket.cc21c5fd.jpg",
+    "static/media/jeans.jpg": "/shopping-cart-react/static/media/jeans.ebdaa7f4.jpg",
+    "static/media/jogger.jpg": "/shopping-cart-react/static/media/jogger.ebbbadec.jpg",
+    "static/media/remove.svg": "/shopping-cart-react/static/media/remove.67b8cf8c.svg",
+    "static/media/shirt.jpg": "/shopping-cart-react/static/media/shirt.346a7bb0.jpg",
+    "static/media/sweatshirt.jpg": "/shopping-cart-react/static/media/sweatshirt.9a08e3db.jpg",
+    "static/media/tshirt.jpg": "/shopping-cart-react/static/media/tshirt.21a4e3b6.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.9110f075.js",
-    "static/js/2.363d5454.chunk.js",
-    "static/js/main.6a87182e.chunk.js"
+    "static/js/2.7777df66.chunk.js",
+    "static/js/main.f39bcded.chunk.js"
   ]
 }
