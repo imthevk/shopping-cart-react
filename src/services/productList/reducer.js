@@ -64,7 +64,7 @@ const dataProducts = [
     addedDate: 1562284800 /* 07/05/2019 */,
   },
   {
-    id: 6,
+    id: 7,
     title: 'Jogger',
     price: 289,
     sizes: ['XS', 'S'],
@@ -73,7 +73,7 @@ const dataProducts = [
     addedDate: 1562284800 /* 07/05/2019 */,
   },
   {
-    id: 6,
+    id: 8,
     title: 'Shirt',
     price: 289,
     sizes: ['XS', 'S'],
