@@ -2,7 +2,9 @@
 
 https://rawfour.github.io/shopping-cart-react/
 
-![picture](https://github.com/rawfour/shopping-cart-react/tree/master/src/assets/screenshots/screenshot.png)
+
+<img src="src/assets/screenshots/screenshot.PNG">
+
 
 ## Table of contents
 * [Instructions](#Instructions)
