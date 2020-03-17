@@ -37,4 +37,5 @@ Project uses:
 * React
 * Redux
 * Styled Component
+* Tools: Eslint, Prettier, Storybook,
 
