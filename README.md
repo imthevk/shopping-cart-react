@@ -2,6 +2,8 @@
 
 https://rawfour.github.io/shopping-cart-react/
 
+<img src="src/assets/screenshots/screenshot.PNG">
+
 ## Table of contents
 
 - [Instructions](#Instructions)
@@ -36,7 +38,12 @@ This is a simple shopping cart with product sort option on the product list.
 
 Project uses:
 
-- React + React Hooks
+- React
 - Redux
 - Styled Component
-- Tools: ESlint, Husky + lint-staged, Storybook
+- Tools: Eslint, Prettier, Storybook,
+
+* React + React Hooks
+* Redux
+* Styled Component
+* Tools: ESlint, Husky + lint-staged, Storybook
