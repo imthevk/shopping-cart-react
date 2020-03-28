@@ -7,10 +7,10 @@ import MediumLabel from 'components/label/MediumLabel';
 import close from 'assets/icons/close.svg';
 import { connect } from 'react-redux';
 import {
-  closeCart as closeCartAction,
-  clearBasket as clearBasketAction,
   removeProduct as removeProductAction,
   changeProductQuantity as changeProductQuantityAction,
+  closeCart as closeCartAction,
+  clearBasket as clearBasketAction,
 } from 'services/cart/actions';
 import CartItem from './cartItem/CartItem';
 
@@ -100,15 +100,22 @@ const Cart = props => {
     removeProduct,
     changeProductQuantity,
   } = props;
-
-  const cartItems = products.map(product => (
-    <CartItem
-      key={product.id}
-      product={product}
-      changeProductQuantity={changeProductQuantity}
-      removeProduct={removeProduct}
-    />
-  ));
+  // console.log('cart render');
+  let renderItems;
+  if (products.length !== 0) {
+    renderItems = products.map(product => (
+      <CartItem
+        key={product.id}
+        product={product}
+        products={products}
+        changeProductQuantity={changeProductQuantity}
+        removeProduct={removeProduct}
+      />
+    ));
+  } else {
+    renderItems = <EmptyCart>Your cart is empty...</EmptyCart>;
+  }
+  // const cartItems = products.map(product => <CartItem key={product.id} product={product} />);
   return (
     <CartWrapper isCartOpen={isCartOpen}>
       <HeadingWrapper>
@@ -116,7 +123,8 @@ const Cart = props => {
         <CloseCart icon={close} onClick={closeCart} />
       </HeadingWrapper>
       <ItemsWrapper>
-        {cartItems.length ? cartItems : <EmptyCart>Your cart is empty...</EmptyCart>}
+        {/* {cartItems.length ? cartItems : <EmptyCart>Your cart is empty...</EmptyCart>} */}
+        {renderItems}
       </ItemsWrapper>
       <SummaryWrapper>
         <TotalWrapper>
@@ -142,17 +150,18 @@ Cart.propTypes = {
   changeProductQuantity: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-  const { isCartOpen, products, totalPrice } = state.cart;
-  return { isCartOpen, products, totalPrice };
-};
+const mapStateToProps = state => ({
+  isCartOpen: state.cart.isCartOpen,
+  products: state.cart.products,
+  totalPrice: state.cart.totalPrice,
+});
 
 const mapDispatchToProps = dispatch => ({
   closeCart: () => dispatch(closeCartAction()),
   clearBasket: () => dispatch(clearBasketAction()),
-  removeProduct: product => dispatch(removeProductAction(product)),
-  changeProductQuantity: (btnType, product) =>
-    dispatch(changeProductQuantityAction(btnType, product)),
+  removeProduct: (product, products) => dispatch(removeProductAction(product, products)),
+  changeProductQuantity: (btnType, product, products) =>
+    dispatch(changeProductQuantityAction(btnType, product, products)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

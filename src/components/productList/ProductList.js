@@ -50,7 +50,14 @@ const FilterButton = styled(Button)`
   padding: 10px 30px;
 `;
 
-const ProductList = ({ data, sortProducts, openFilters, isFiltersOpen, filterProducts }) => {
+const ProductList = ({
+  data,
+  sortProducts,
+  openFilters,
+  isFiltersOpen,
+  filterProducts,
+  activeFilters,
+}) => {
   const products = data.map(product => <Product key={product.id} product={product} />);
 
   return (
@@ -63,6 +70,7 @@ const ProductList = ({ data, sortProducts, openFilters, isFiltersOpen, filterPro
         isFiltersOpen={isFiltersOpen}
         openFilters={openFilters}
         filterProducts={filterProducts}
+        activeFilters={activeFilters}
       />
     </>
   );
@@ -74,17 +82,19 @@ ProductList.propTypes = {
   isFiltersOpen: PropTypes.bool.isRequired,
   openFilters: PropTypes.func.isRequired,
   filterProducts: PropTypes.func.isRequired,
+  activeFilters: PropTypes.shape().isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   sortProducts: (value, products) => dispatch(sortProductsAction(value, products)),
   openFilters: () => dispatch(openFiltersAction()),
-  filterProducts: (filterType, value) => dispatch(filterProductsAction(filterType, value)),
+  filterProducts: (filterType, value, activeFilter) =>
+    dispatch(filterProductsAction(filterType, value, activeFilter)),
 });
 
 const mapStateToProps = state => {
-  const { data, isFiltersOpen } = state.productList;
-  return { data, isFiltersOpen };
+  const { data, isFiltersOpen, activeFilters } = state.productList;
+  return { data, isFiltersOpen, activeFilters };
   //  zwraca obiekt z propsem który zostanie podany do tego komponentu
 };
 //  można to zapisac też w krótszy sposób:

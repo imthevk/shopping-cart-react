@@ -1,3 +1,0 @@
-export const SORT_PRODUCTS = 'SORT_PRODUCTS';
-export const OPEN_FILTERS = 'OPEN_FILTERS';
-export const FILTER_PRODUCTS = 'FILTER_PRODUCTS';

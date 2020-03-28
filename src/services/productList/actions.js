@@ -1,15 +1,62 @@
-import { SORT_PRODUCTS, OPEN_FILTERS, FILTER_PRODUCTS } from 'services/productList/actionTypes';
+import { SORT_PRODUCTS, OPEN_FILTERS, FILTER_PRODUCTS } from 'services/actionTypes';
+import dataProducts from 'data';
 
-export const sortProducts = (value, products) => ({
-  type: SORT_PRODUCTS,
-  payload: { value, products },
-});
+export const sortProducts = (value, products) => {
+  if (value === 'latest') {
+    products.sort((a, b) => b.addedDate - a.addedDate);
+  } else if (value === 'lowestprice') {
+    products.sort((a, b) => a.price - b.price);
+  } else if (value === 'highestprice') {
+    products.sort((a, b) => b.price - a.price);
+  }
+  return {
+    type: SORT_PRODUCTS,
+    payload: products,
+  };
+};
 
 export const openFilters = () => ({
   type: OPEN_FILTERS,
 });
 
-export const filterProducts = (filterType, value) => ({
-  type: FILTER_PRODUCTS,
-  payload: { filterType, value },
-});
+export const filterProducts = (filterType, value, activeFilters) => {
+  let newProductList = dataProducts;
+  let newActiveFilters = activeFilters;
+  if (newActiveFilters[filterType]) {
+    if (newActiveFilters[filterType].includes(value)) {
+      newActiveFilters[filterType] = newActiveFilters[filterType].filter(
+        option => option !== value,
+      );
+      if (newActiveFilters[filterType].length === 0) {
+        delete newActiveFilters[filterType];
+      }
+    } else {
+      newActiveFilters[filterType] = [...newActiveFilters[filterType], value];
+    }
+  } else {
+    newActiveFilters = { ...newActiveFilters, [filterType]: [value] };
+  }
+
+  Object.keys(newActiveFilters).forEach((filter, index1) => {
+    if (newActiveFilters[filter].length !== 0) {
+      newActiveFilters[filter].forEach((filterValue, index2) => {
+        if (index1 === 0 && index2 === 0) {
+          newProductList = newProductList.filter(
+            product =>
+              product[Object.keys(newActiveFilters)[0]].includes(
+                newActiveFilters[Object.keys(newActiveFilters)[0]][0],
+              ) === true,
+          );
+        } else {
+          newProductList = newProductList.filter(
+            product => product[filter].includes(filterValue) === true,
+          );
+        }
+      });
+    }
+  });
+  return {
+    type: FILTER_PRODUCTS,
+    payload: { newActiveFilters, newProductList },
+  };
+};

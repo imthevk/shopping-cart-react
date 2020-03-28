@@ -71,7 +71,7 @@ const AvailableOption = styled.span`
 `;
 
 const Product = props => {
-  const { product, addProduct } = props;
+  const { product, products, addProduct } = props;
   const { title, price, img, sizes, colors } = product;
 
   const availableColors = colors.map(color => <AvailableOption key={color} color={color} />);
@@ -92,7 +92,7 @@ const Product = props => {
           <AvailableOptionsLabel>Available sizes</AvailableOptionsLabel>
           {availableSizes}
         </AvailableOptionsWrapper>
-        <AddToCart onClick={() => addProduct(product)}>Add to cart</AddToCart>
+        <AddToCart onClick={() => addProduct(product, products)}>Add to cart</AddToCart>
       </InnerWrapper>
     </ProductWrapper>
   );
@@ -106,11 +106,17 @@ Product.propTypes = {
     sizes: PropTypes.arrayOf(PropTypes.string).isRequired,
     colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   addProduct: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => {
+  const { products } = state.cart;
+  return { products };
+};
+
 const mapDispatchToProps = dispatch => ({
-  addProduct: product => dispatch(addProductAction(product)),
+  addProduct: (product, products) => dispatch(addProductAction(product, products)),
 });
 
-export default connect(null, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

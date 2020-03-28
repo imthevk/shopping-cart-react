@@ -68,9 +68,8 @@ const Remove = styled(ButtonIcon)`
 `;
 
 const CartItem = props => {
-  const { removeProduct, changeProductQuantity, product } = props;
+  const { removeProduct, changeProductQuantity, product, products } = props;
   const { id, title, img, price, quantity } = product;
-
   return (
     <ItemWrapper>
       <ItemImage src={img} alt={title} />
@@ -81,18 +80,18 @@ const CartItem = props => {
           <QuantityButton
             type="button"
             value="-"
-            onClick={() => changeProductQuantity('minus', product)}
+            onClick={() => changeProductQuantity('minus', product, products)}
             disabled={product.quantity === 1 && true}
           />
           <QuantityInput type="text" value={quantity} name={id} disabled />
           <QuantityButton
             type="button"
             value="+"
-            onClick={() => changeProductQuantity('plus', product)}
+            onClick={() => changeProductQuantity('plus', product, products)}
           />
         </QuantityForm>
       </InnerWrapper>
-      <Remove icon={remove} onClick={() => removeProduct(product)} />
+      <Remove icon={remove} onClick={() => removeProduct(product, products)} />
     </ItemWrapper>
   );
 };
@@ -107,6 +106,7 @@ CartItem.propTypes = {
   }).isRequired,
   removeProduct: PropTypes.func.isRequired,
   changeProductQuantity: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default CartItem;
