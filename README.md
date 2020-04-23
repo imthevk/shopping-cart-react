@@ -42,8 +42,3 @@ Project uses:
 - Redux
 - Styled Component
 - Tools: Eslint, Prettier, Storybook,
-
-* React + React Hooks
-* Redux
-* Styled Component
-* Tools: ESlint, Husky + lint-staged, Storybook
