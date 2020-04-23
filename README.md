@@ -38,7 +38,7 @@ This is a simple shopping cart with product sort option on the product list.
 
 Project uses:
 
-- React
-- Redux
-- Styled Component
-- Tools: Eslint, Prettier, Storybook,
+* React + React Hooks
+* Redux
+* Styled Component
+* Tools: ESlint, Husky + lint-staged, Storybook
