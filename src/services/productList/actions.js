@@ -20,7 +20,8 @@ export const openFilters = () => ({
 });
 
 export const filterProducts = (filterType, value, activeFilters) => {
-  let newProductList = dataProducts;
+  let newProductList = [];
+  const allProducts = dataProducts;
   let newActiveFilters = activeFilters;
   if (newActiveFilters[filterType]) {
     if (newActiveFilters[filterType].includes(value)) {
@@ -31,32 +32,52 @@ export const filterProducts = (filterType, value, activeFilters) => {
         delete newActiveFilters[filterType];
       }
     } else {
-      newActiveFilters[filterType] = [...newActiveFilters[filterType], value];
+      newActiveFilters[filterType].push(value);
     }
   } else {
     newActiveFilters = { ...newActiveFilters, [filterType]: [value] };
   }
 
-  Object.keys(newActiveFilters).forEach((filter, index1) => {
-    if (newActiveFilters[filter].length !== 0) {
-      newActiveFilters[filter].forEach((filterValue, index2) => {
-        if (index1 === 0 && index2 === 0) {
-          newProductList = newProductList.filter(
-            product =>
-              product[Object.keys(newActiveFilters)[0]].includes(
-                newActiveFilters[Object.keys(newActiveFilters)[0]][0],
-              ) === true,
-          );
-        } else {
-          newProductList = newProductList.filter(
-            product => product[filter].includes(filterValue) === true,
-          );
-        }
-      });
-    }
-  });
+  const activeFiltersKeys = Object.keys(newActiveFilters);
+
+  if (activeFiltersKeys.length === 0) {
+    newProductList = allProducts;
+  } else {
+    activeFiltersKeys.forEach((filter, index) => {
+      if (index === 0) {
+        newProductList = allProducts.filter(product => {
+          const incomingProductId = product.id;
+          let isProductRepeat = false;
+          let addProduct = false;
+
+          newProductList.forEach(item => {
+            if (item.id === incomingProductId) {
+              isProductRepeat = true;
+            }
+          });
+
+          if (!isProductRepeat) {
+            addProduct = product[filter].some(item => newActiveFilters[filter].includes(item));
+          }
+
+          return addProduct;
+        });
+      } else {
+        newProductList = newProductList.filter(product => {
+          let addProduct = false;
+
+          addProduct = product[filter].some(item => newActiveFilters[filter].includes(item));
+
+          return addProduct;
+        });
+      }
+    });
+  }
   return {
     type: FILTER_PRODUCTS,
-    payload: { newActiveFilters, newProductList },
+    payload: {
+      newActiveFilters,
+      newProductList,
+    },
   };
 };
