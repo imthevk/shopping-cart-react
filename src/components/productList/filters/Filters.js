@@ -10,13 +10,12 @@ const FiltersWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   max-width: 500px;
-  padding: 0 30px;
+  padding: 0 20px;
   background-color: white;
   position: fixed;
   top: 0;
   left: 0;
   transition: 0.4s;
-  /* border-right: 2px solid black; */
   transform: ${({ isFiltersOpen }) => (isFiltersOpen ? 'translateX(0)' : 'translateX(-100%)')};
   box-shadow: -5px 2px 20px rgba(0, 0, 0, 0.25), 0 0px 0px rgba(0, 0, 0, 0.22);
 `;
@@ -60,8 +59,8 @@ const FilterLabel = styled.h4`
 `;
 
 const OptionsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   grid-gap: 20px;
   padding: 20px 0;
 `;

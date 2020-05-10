@@ -44,10 +44,20 @@ const ProductListLabel = styled(MediumLabel)`
   margin: 0 auto;
 `;
 
+const FilterBar = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 20px;
+`;
+
 const FilterButton = styled(Button)`
   float: left;
   margin: 0;
   padding: 10px 30px;
+  width: 100%;
+  @media ${device.mobileL} {
+    width: auto;
+  }
 `;
 
 const ProductList = ({
@@ -63,14 +73,17 @@ const ProductList = ({
   return (
     <>
       <ProductListLabel>React Shopping Cart</ProductListLabel>
-      <FilterButton onClick={openFilters}>Filter</FilterButton>
-      <Sort sortProducts={sortProducts} products={data} />
+      <FilterBar>
+        <FilterButton onClick={openFilters}>Filter</FilterButton>
+        <Sort sortProducts={sortProducts} products={data} />
+      </FilterBar>
       <ProductListWrapper>{products}</ProductListWrapper>
       <Filters
         isFiltersOpen={isFiltersOpen}
         openFilters={openFilters}
         filterProducts={filterProducts}
         activeFilters={activeFilters}
+        data={data}
       />
     </>
   );

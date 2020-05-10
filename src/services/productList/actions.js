@@ -19,7 +19,7 @@ export const openFilters = () => ({
   type: OPEN_FILTERS,
 });
 
-export const filterProducts = (filterType, value, activeFilters) => {
+export const filterProducts = (filterType, value, activeFilters, isRange) => {
   let newProductList = [];
   const allProducts = dataProducts;
   let newActiveFilters = activeFilters;
@@ -44,7 +44,7 @@ export const filterProducts = (filterType, value, activeFilters) => {
     newProductList = allProducts;
   } else {
     activeFiltersKeys.forEach((filter, index) => {
-      if (index === 0) {
+      if (index === 0 || isRange) {
         newProductList = allProducts.filter(product => {
           const incomingProductId = product.id;
           let isProductRepeat = false;

@@ -100,7 +100,6 @@ const Cart = props => {
     removeProduct,
     changeProductQuantity,
   } = props;
-  // console.log('cart render');
   let renderItems;
   if (products.length !== 0) {
     renderItems = products.map(product => (
@@ -115,17 +114,13 @@ const Cart = props => {
   } else {
     renderItems = <EmptyCart>Your cart is empty...</EmptyCart>;
   }
-  // const cartItems = products.map(product => <CartItem key={product.id} product={product} />);
   return (
     <CartWrapper isCartOpen={isCartOpen}>
       <HeadingWrapper>
         <Heading>Your Cart</Heading>
         <CloseCart icon={close} onClick={closeCart} />
       </HeadingWrapper>
-      <ItemsWrapper>
-        {/* {cartItems.length ? cartItems : <EmptyCart>Your cart is empty...</EmptyCart>} */}
-        {renderItems}
-      </ItemsWrapper>
+      <ItemsWrapper>{renderItems}</ItemsWrapper>
       <SummaryWrapper>
         <TotalWrapper>
           <Total>Total</Total>
